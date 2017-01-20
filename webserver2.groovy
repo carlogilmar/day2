@@ -6,12 +6,13 @@ import io.vertx.groovy.ext.web.handler.StaticHandler
 
 //Event Bus
 def eb = vertx.eventBus()
-
 //Verticle Sender
-vertx.eventBus().send("com.makingdevs", 1, { reply ->
-  if (reply.succeeded()) {
-    println reply.result().body()
-  }
-})
+def fichero = new File ("dia2.txt")
+//Iterando las lineas del fichero
+fichero.eachLine(){
+ eb.send("com.makingdevs", it)
+}
 
-
+eb.consumer("com.respuesta", { message ->
+  println "Respuesta acumulativa: "+message.body()
+ })

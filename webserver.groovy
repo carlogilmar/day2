@@ -23,7 +23,7 @@ Integer extra
 Integer areatotal=0
 
 //Verticle-Consumer/Handler
-eb.consumer("com.makingdevs", { message ->
+eb.consumer("com.makingdevs") { message ->
         println "Linea procesando:"+message.body()
         //obtenemos los valores de cada una de las tres áreas
 	a1= message.body().split("x")[0].toInteger() * message.body().split("x")[1].toInteger()
@@ -37,9 +37,10 @@ eb.consumer("com.makingdevs", { message ->
 	a3=a3*2
         //Area total
 	areatotal=areatotal+a1+a2+a3+extra
+        Thread.sleep( 1000);  
         //Comunicando a otro verticle
         eb.send("com.respuesta", areatotal)
-})
+}
 
 router.route("/prueba1").handler { routingContext ->
       routingContext.response()

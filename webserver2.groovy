@@ -14,5 +14,6 @@ fichero.eachLine(){
 }
 
 eb.consumer("com.respuesta", { message ->
+        Thread.sleep( 1000);  
   println "Respuesta acumulativa: "+message.body()
  })
